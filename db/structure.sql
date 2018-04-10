@@ -54,6 +54,20 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
+-- Name: devise_sessionable_sessions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE devise_sessionable_sessions (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    authentication_token character varying,
+    authable_id uuid NOT NULL,
+    authable_type character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -92,6 +106,14 @@ ALTER TABLE ONLY ar_internal_metadata
 
 
 --
+-- Name: devise_sessionable_sessions devise_sessionable_sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY devise_sessionable_sessions
+    ADD CONSTRAINT devise_sessionable_sessions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -105,6 +127,20 @@ ALTER TABLE ONLY schema_migrations
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_devise_sessionable_sessions_on_authable; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_devise_sessionable_sessions_on_authable ON devise_sessionable_sessions USING btree (authable_id, authable_type);
+
+
+--
+-- Name: index_devise_sessionable_sessions_on_authentication_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_devise_sessionable_sessions_on_authentication_token ON devise_sessionable_sessions USING btree (authentication_token);
 
 
 --
@@ -129,6 +165,7 @@ SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
 ('20180410104556'),
-('20180410110836');
+('20180410110836'),
+('20180410111338');
 
 
