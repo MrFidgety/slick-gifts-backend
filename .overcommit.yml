@@ -1,0 +1,10 @@
+PreCommit:
+  RuboCop:
+    enabled: true
+  Fasterer:
+    enabled: true
+  RailsSchemaUpToDate:
+    enabled: true
+PrePush:
+  Brakeman:
+    enabled: true
