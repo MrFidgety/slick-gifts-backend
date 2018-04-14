@@ -24,11 +24,13 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
-class User < ApplicationRecord
-  acts_as_sessionable
+require "rails_helper"
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+RSpec.describe UserSerializer, type: :serializer do
+  include_context "serializer"
+
+  let(:resource) { build(:user) }
+  let(:attributes) { %w[id email] }
+
+  it { is_expected.to serialize_attributes(attributes) }
 end

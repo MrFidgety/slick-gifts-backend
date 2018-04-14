@@ -1,0 +1,15 @@
+language: ruby
+before_install:
+  - gem update --system && gem install bundler
+cache: bundler
+addons:
+  postgresql: '9.6'
+services:
+- redis-server
+before_script:
+- psql -c "create database travis_ci_test;" -U postgres
+- cp config/database.yml.travis config/database.yml
+notifications:
+  slack:
+    rooms:
+      secure: JG8nzy317xiyApzN8ARJ+cmO3kXjAweJ11PzFgZhZIa8MIzfeTMFqRva8Uh3KCBKCy9bSbRLpgTKHfD5leOxsho2tyIdLIrSjpd2zL6/szrKvlGhDorU3njNvXqTpupDtDn30pfB5M3S+hQ+deCPBs7fyL4S7YMu8RGfVT/Mbu+Okq5oMt7gyw3EUZuQbejYOYfXDdSgFqUQb2xIdCL/yDvN6aujL9CR/LezU367bO1k0t1NDC1T+e/9eln80ocLOL2cd6uduJaXOuwvUtZnNB5o7eldqXLwpIBqkhx1rQ1TlBCbfssYvB3NY+Z5Qrw92TCaClkpgcmqEBdXS5+7JYe0DArBDKafv0pkSh1nPJylrs53JS/XrvFS/Nq1tkgZvTS7SJSDIza6ezHe8zBcRa5fT/Vculp7WMr804VQHpcl3Nex5B+6di8ABcq6Gl5Fmg65rJu8K8tb+Tmpw+RSSOODvqno9oL0+lk/yYtFu3xkwzf5gzU3dJYK9R+a+Kq3bz3npzKed2wEs6YW8Uk6eVm0zhFnXMP1asxkjEXdUDzeERIGU3g0MwGiGwcxOiBE5Woztvdg28LcmZ9X5C2PUXbWeaFTdFs6QcW3bWPVVsux5IUCeeYyxr9ORPbaH9FpWRezuKl7wX9MocFcCuIJdYNtlLhHpX79AXvE1te1O4s=

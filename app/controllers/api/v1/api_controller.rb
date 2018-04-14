@@ -6,7 +6,12 @@ module Api
       respond_to :json
       responders :json
 
+      renderror_auto_rescue :bad_request, :invalid_document
+
       include Api::SessionAuthentication
+      include Api::ValidateRequestBody
+      include Api::ResponseOptions
+      include Api::TopLevelMeta
 
       private
 

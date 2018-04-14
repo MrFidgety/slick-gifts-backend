@@ -39,8 +39,8 @@ gem "devise_token_auth",  "~> 0.1"
 
 # API
 # ===
-# Make it easy to choose what to return from the API
-gem "fast_jsonapi"
+# Serialize and de-serialize JSON:API
+gem "active_model_serializers", "~> 0.10.0"
 # JSON:API pagination
 gem "kaminari"
 # Make JSON responses simple
@@ -61,7 +61,7 @@ gem "dry-validation", "~> 0.11"
 
 group :development, :test, :staging do
   # Factory Bot to create objects for your tests
-  gem "factory_bot"
+  gem "factory_bot_rails"
   # Generate better fake data
   gem "faker", github: "stympy/faker"
   # Freeze and move through time
