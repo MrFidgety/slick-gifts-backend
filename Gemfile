@@ -61,7 +61,7 @@ gem "dry-validation", "~> 0.11"
 
 group :development, :test, :staging do
   # Factory Bot to create objects for your tests
-  gem "factory_bot"
+  gem "factory_bot_rails"
   # Generate better fake data
   gem "faker", github: "stympy/faker"
   # Freeze and move through time
