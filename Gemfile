@@ -39,8 +39,8 @@ gem "devise_token_auth",  "~> 0.1"
 
 # API
 # ===
-# Make it easy to choose what to return from the API
-gem "fast_jsonapi"
+# Serialize and de-serialize JSON:API
+gem "active_model_serializers", "~> 0.10.0"
 # JSON:API pagination
 gem "kaminari"
 # Make JSON responses simple

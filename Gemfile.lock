@@ -65,6 +65,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_model_serializers (0.10.7)
+      actionpack (>= 4.1, < 6)
+      activemodel (>= 4.1, < 6)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (5.1.6)
       activesupport (= 5.1.6)
       globalid (>= 0.3.6)
@@ -92,6 +97,8 @@ GEM
     builder (3.2.3)
     byebug (10.0.2)
     cancancan (2.1.4)
+    case_transform (0.2)
+      activesupport
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.2)
@@ -151,8 +158,6 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
-    fast_jsonapi (1.1.1)
-      activesupport (>= 4.2)
     fasterer (0.4.1)
       colorize (~> 0.7)
       ruby_parser (~> 3.11.0)
@@ -165,6 +170,7 @@ GEM
       concurrent-ruby (~> 1.0)
     inflecto (0.0.2)
     iniparse (1.4.4)
+    jsonapi-renderer (0.2.0)
     kaminari (1.1.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.1.1)
@@ -344,6 +350,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers (~> 0.10.0)
   annotate!
   brakeman
   byebug
@@ -356,7 +363,6 @@ DEPENDENCIES
   dry-validation (~> 0.11)
   factory_bot_rails
   faker!
-  fast_jsonapi
   fasterer
   foreman
   kaminari
