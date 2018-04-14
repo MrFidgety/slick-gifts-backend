@@ -43,9 +43,6 @@ module SlickGiftsBackend
       g.orm :active_record, primary_key_type: :uuid
     end
 
-    # Use SQL for the schema, so we can do things like index on LOWER(name)
-    config.active_record.schema_format = :sql
-
     # Use sidekiq for async jobs
     config.active_job.queue_adapter = :sidekiq
 

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class EnablePgCryptoExtension < ActiveRecord::Migration[5.1]
+class EnablePgExtensions < ActiveRecord::Migration[5.1]
   def change
     enable_extension "pgcrypto"
+    enable_extension "citext"
   end
 end
