@@ -17,8 +17,8 @@ class UserForm < Reform::Form
       predicates StringPredicates
     end
 
-    required(:email).filled(:not_blank?)
-    required(:password).filled(:not_blank?)
+    required(:email).value(:not_blank?)
+    required(:password).value(:not_blank?)
   end
 
   validation :email_format, if: :default do
@@ -47,6 +47,6 @@ class UserForm < Reform::Form
   end
 
   validation :password, if: :default do
-    required(:password).filled(size?: User.password_length)
+    required(:password).value(size?: User.password_length)
   end
 end
