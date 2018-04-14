@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-ruby "2.5.0"
+ruby "2.5.1"
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -81,7 +81,7 @@ group :development, :test do
   # Clean the database after testing
   gem "database_cleaner"
   # use rspec for BDD (behaviour-driven development)
-  gem "rspec-rails", "~> 3.6.0"
+  gem "rspec-rails"
   # Spring and rspec playing nicely together
   gem "spring-commands-rspec"
 
