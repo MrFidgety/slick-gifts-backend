@@ -19,8 +19,9 @@
 #  updated_at             :datetime         not null
 #
 
-require "rails_helper"
-
-RSpec.describe User, type: :model do
-  it_behaves_like "has a valid factory"
+FactoryBot.define do
+  factory :user do
+    email { Faker::Internet.email }
+    password { Faker::Internet.password }
+  end
 end

@@ -30,4 +30,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  errors:
+    unique?: "already exists"
+    not_blank?: "must not be blank"
+    email_address?: "is not a valid email address"
