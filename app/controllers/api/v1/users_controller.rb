@@ -11,9 +11,7 @@ module Api
         action = ::Users.create_user(user_attributes)
 
         if action.success?
-          respond_with action.user,
-                       include: %w[sessions],
-                       links: { self: api_v1_users_me_url }
+          respond_with action.user
         else
           render_unprocessable action
         end

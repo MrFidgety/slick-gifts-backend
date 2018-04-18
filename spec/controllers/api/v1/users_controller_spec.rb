@@ -25,7 +25,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     describe "Success" do
       it { is_expected.to have_http_status :created }
       it { is_expected.to render_primary_resource user }
-      it { is_expected.to have_top_level_links(self: "/users/me") }
 
       it "creates the user" do
         expect(Users).to receive(:create_user)
