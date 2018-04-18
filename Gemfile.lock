@@ -115,6 +115,9 @@ GEM
     declarative-builder (0.1.0)
       declarative-option (< 0.2.0)
     declarative-option (0.1.0)
+    devise-async (1.0.0)
+      activejob (>= 5.0)
+      devise (>= 4.0)
     devise_token_auth (0.1.43)
       devise (> 3.5.2, < 4.5)
       rails (< 6)
@@ -358,6 +361,7 @@ DEPENDENCIES
   counter_culture (~> 1.9)
   database_cleaner
   devise!
+  devise-async
   devise_sessionable!
   devise_token_auth (~> 0.1)
   dry-validation (~> 0.11)
