@@ -3,8 +3,13 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      devise_scope :user do
-        resources :users, only: %i[create]
+      devise_for :users, skip: :all
+
+      resources :users, only: %i[create]
+
+      namespace :user do
+        # confirmation url required for devise confirmable
+        resource :confirmation, only: %i[show]
       end
 
       namespace :users do
