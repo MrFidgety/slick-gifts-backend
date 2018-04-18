@@ -32,5 +32,23 @@ FactoryBot.define do
   factory :user do
     email { Faker::Internet.email }
     password { Faker::Internet.password }
+
+    transient do
+      confirmed true
+    end
+
+    trait :unconfirmed do
+      confirmed false
+    end
+
+    after(:build) do |user, evaluator|
+      if evaluator.confirmed
+        # Set user to be confirmed by default
+        user.skip_confirmation!
+      else
+        # Set user to be unconfirmed without sending email
+        user.skip_confirmation_notification!
+      end
+    end
   end
 end
