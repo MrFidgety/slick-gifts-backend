@@ -15,6 +15,10 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :inet
 #  last_sign_in_ip        :inet
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  unconfirmed_email      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -28,5 +32,23 @@ FactoryBot.define do
   factory :user do
     email { Faker::Internet.email }
     password { Faker::Internet.password }
+
+    transient do
+      confirmed true
+    end
+
+    trait :unconfirmed do
+      confirmed false
+    end
+
+    after(:build) do |user, evaluator|
+      if evaluator.confirmed
+        # Set user to be confirmed by default
+        user.skip_confirmation!
+      else
+        # Set user to be unconfirmed without sending email
+        user.skip_confirmation_notification!
+      end
+    end
   end
 end

@@ -15,6 +15,10 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :inet
 #  last_sign_in_ip        :inet
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  unconfirmed_email      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -28,7 +32,12 @@ class User < ApplicationRecord
   acts_as_sessionable
 
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :confirmable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  # Force devise emails to be sent in workers
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
 end

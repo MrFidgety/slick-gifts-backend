@@ -17,7 +17,6 @@ RSpec.describe "Api::V1::Users", type: :request do
       expect(response).to have_http_status :created
       expect(response).to match_primary_type "users"
       expect(response).to match_primary_document(email: user_attributes[:email])
-      expect(response).to have_top_level_links(self: "/users/me")
     end
 
     it_behaves_like "request endpoint with data validation"
