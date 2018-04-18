@@ -16,7 +16,11 @@ RSpec.describe Users::CreateUser do
       expect { perform }.to change(User, :count).by 1
     end
 
-    it "schedules a confirmation email"
+    it "schedules a confirmation email" do
+      Sidekiq::Testing.inline! do
+        expect { perform }.to change(Devise::Mailer.deliveries, :count).by 1
+      end
+    end
   end
 
   describe "invalid attributes" do
