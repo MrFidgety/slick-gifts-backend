@@ -8,6 +8,8 @@ module Api
 
       renderror_auto_rescue :bad_request, :invalid_document
 
+      skip_before_action :verify_authenticity_token
+
       include Api::SessionAuthentication
       include Api::ValidateRequestBody
       include Api::ResponseOptions
