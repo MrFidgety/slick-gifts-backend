@@ -15,6 +15,8 @@ RSpec.describe Users::CreateUser do
     it "creates a user" do
       expect { perform }.to change(User, :count).by 1
     end
+
+    it "schedules a confirmation email"
   end
 
   describe "invalid attributes" do
