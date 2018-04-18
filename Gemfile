@@ -36,8 +36,6 @@ gem "devise", github: "plataformatec/devise"
 gem "devise_sessionable", github: "Papercloud/devise_sessionable"
 # Authenticate with tokens
 gem "devise_token_auth",  "~> 0.1"
-# Send devise emails in workers
-gem "devise-async"
 
 # API
 # ===
