@@ -31,7 +31,7 @@ RSpec.describe Users::ConfirmUser do
 
   describe "invalid confirmation token" do
     let(:expected_error) do
-      { confirmation_token: [I18n.t("errors.messages.invalid")] }
+      { confirmation_token: [I18n.t(:"errors.messages.invalid")] }
     end
 
     before { attributes[:confirmation_token] = "invalid" }
@@ -58,7 +58,7 @@ RSpec.describe Users::ConfirmUser do
     let(:expected_error) do
       {
         email: [
-          I18n.t("errors.messages.confirmation_period_expired",
+          I18n.t(:"errors.messages.confirmation_period_expired",
             period: "#{Devise.confirm_within.parts[:days]} days"
           )
         ]
@@ -87,7 +87,7 @@ RSpec.describe Users::ConfirmUser do
 
   describe "user already confirmed" do
     let(:expected_error) do
-      { email: [I18n.t("errors.messages.already_confirmed")] }
+      { email: [I18n.t(:"errors.messages.already_confirmed")] }
     end
 
     before do
