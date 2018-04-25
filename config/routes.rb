@@ -9,7 +9,8 @@ Rails.application.routes.draw do
         collection do
           # Set confirmation url used by devise
           resource :confirmation, only: %i[show],
-                                  as: :user_confirmation
+                                  as: :user_confirmation,
+                                  controller: "users/confirmations"
         end
       end
     end

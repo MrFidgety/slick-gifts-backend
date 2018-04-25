@@ -28,4 +28,36 @@ RSpec.describe "Api::V1::Users", type: :request do
       let(:error_pointer) { "/data/attributes/email" }
     end
   end
+
+  describe "GET users/confirmation" do
+    before do
+      request_path "/api/v1/users/confirmation?" \
+        "confirmation_token=#{user.confirmation_token}"
+    end
+
+    let!(:user) { create(:user, :unconfirmed) }
+
+    subject { do_get params: default_params }
+
+    it "Success confirms a user" do
+      expect do
+        subject
+        user.reload
+      end.to change(user, :confirmed?).to true
+
+      expect(response).to have_http_status :ok
+      expect(response).to match_primary_type "sessions"
+      expect(response).to render_included_resource user
+    end
+
+    it_behaves_like "request with failed action returns unprocessable" do
+      before { user.confirm }
+
+      let(:error_detail) do
+        "Email #{I18n.t(:"errors.messages.already_confirmed")}"
+      end
+
+      let(:error_pointer) { "/data/attributes/email" }
+    end
+  end
 end
