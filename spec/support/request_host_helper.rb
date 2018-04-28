@@ -6,7 +6,7 @@ RSpec.configure do |config|
       .to receive(:host) { url }
   end
 
-  TEST_HOST = "example.com".freeze
+  TEST_HOST = 'example.com'.freeze
   config.before(type: :controller) do
     stub_request_host(TEST_HOST)
   end

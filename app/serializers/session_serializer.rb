@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SessionSerializer < ActiveModel::Serializer
-  type "sessions"
+  type 'sessions'
 
   attributes :id, :authentication_token
 

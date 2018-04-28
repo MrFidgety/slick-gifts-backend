@@ -2,7 +2,7 @@
 
 RSpec::Matchers.define :serialize_resource do |object|
   match do
-    serialized_json(object)["data"] == json(response.body)["data"]
+    serialized_json(object)['data'] == json(response.body)['data']
   end
 
   chain :with do |serializer_klass|
@@ -36,7 +36,7 @@ end
 RSpec::Matchers.define :serialize_has_one do |expected|
   match do |actual|
     expect(actual.keys).to include @relationship_key
-    expect(actual[@relationship_key].dig("id"))
+    expect(actual[@relationship_key].dig('id'))
       .to eq expected.id
   end
 
@@ -50,14 +50,14 @@ RSpec::Matchers.define :serialize_has_one do |expected|
   end
 
   def actual_id(actual)
-    actual[@relationship_key]&.dig("id") || "nil"
+    actual[@relationship_key]&.dig('id') || 'nil'
   end
 end
 
 RSpec::Matchers.define :serialize_has_many do |expected|
   match do |actual|
     expect(actual.keys).to include @relationship_key
-    expect(actual[@relationship_key].map_to("id"))
+    expect(actual[@relationship_key].map_to('id'))
       .to match_array(expected.map(&:id))
   end
 
@@ -71,6 +71,6 @@ RSpec::Matchers.define :serialize_has_many do |expected|
   end
 
   def actual_ids(actual)
-    actual[@relationship_key]&.map_to("id") || []
+    actual[@relationship_key]&.map_to('id') || []
   end
 end

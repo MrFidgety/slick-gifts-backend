@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe SessionSerializer, type: :serializer do
-  include_context "serializer"
+  include_context 'serializer'
 
   let(:resource) { build(:session) }
 
-  describe "attributes" do
+  describe 'attributes' do
     let(:attributes) do
       %w[id authentication_token]
     end
@@ -15,10 +15,10 @@ RSpec.describe SessionSerializer, type: :serializer do
     it { is_expected.to serialize_attributes(attributes) }
   end
 
-  describe "associations" do
+  describe 'associations' do
     it do
       user = create(:user, sessions: [resource])
-      is_expected.to serialize_has_one(user).with_key("authable")
+      is_expected.to serialize_has_one(user).with_key('authable')
     end
   end
 end

@@ -12,7 +12,7 @@ class DeviseSessionableCreateSessions < ActiveRecord::Migration[5.1]
 
     add_index :devise_sessionable_sessions,
               [:authable_id, :authable_type],
-              name: "index_devise_sessionable_sessions_on_authable"
+              name: 'index_devise_sessionable_sessions_on_authable'
     add_index :devise_sessionable_sessions, :authentication_token
   end
 end

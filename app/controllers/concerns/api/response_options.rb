@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "active_support/concern"
+require 'active_support/concern'
 
 module Api
   module ResponseOptions
@@ -24,7 +24,7 @@ module Api
       end
 
       def for_action?(k, action)
-        k.to_s == action || k.to_s == "all"
+        k.to_s == action || k.to_s == 'all'
       end
     end
 

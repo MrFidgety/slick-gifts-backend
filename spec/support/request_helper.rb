@@ -29,21 +29,21 @@ RSpec.configure do |c|
 
   def post_body(type_string, attributes, relationships = {})
     default_params.merge(
-      "data" => request_body_data(type_string, attributes, relationships)
+      'data' => request_body_data(type_string, attributes, relationships)
     )
   end
 
   def request_body_data(type_string, attributes, relationships)
     {
-      "type" => type_string,
-      "attributes" => serialize_request_attributes(attributes)
+      'type' => type_string,
+      'attributes' => serialize_request_attributes(attributes)
     }.merge(request_body_relationships(relationships))
   end
 
   def request_body_relationships(relationships)
     return {} unless relationships.any?
 
-    { "relationships" => serialize_request_relationships(relationships) }
+    { 'relationships' => serialize_request_relationships(relationships) }
   end
 
   def serialize_request_attributes(attributes)
@@ -55,7 +55,7 @@ RSpec.configure do |c|
   def serialize_request_relationships(relationships)
     relationships.reduce({}) do |acc, (k, v)|
       acc.merge(
-        k.to_s.dasherize => { "data" => serialize_request_attributes(v) }
+        k.to_s.dasherize => { 'data' => serialize_request_attributes(v) }
       )
     end
   end

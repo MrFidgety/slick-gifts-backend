@@ -28,8 +28,8 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it_behaves_like "has a valid factory"
+  it_behaves_like 'has a valid factory'
 end

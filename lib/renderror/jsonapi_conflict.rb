@@ -3,7 +3,7 @@
 module Renderror
   class JsonapiConflict < Renderror::BaseError
     def status
-      "409"
+      '409'
     end
 
     def default_title

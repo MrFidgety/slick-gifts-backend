@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "active_support/concern"
+require 'active_support/concern'
 
 module Api
   module ValidateRequestBody
@@ -13,13 +13,13 @@ module Api
       private
 
         def validate_type
-          return unless params["data"].present?
+          return unless params['data'].present?
 
           render_errors(Renderror::JsonapiConflict.new) unless type_matches?
         end
 
         def type_matches?
-          params["data"].try(:[], "type") == jsonapi_type
+          params['data'].try(:[], 'type') == jsonapi_type
         end
 
         # This can be overwritten on a per-controller basis if the type name
@@ -29,7 +29,7 @@ module Api
         end
 
         def validate_id
-          return unless params["data"].present?
+          return unless params['data'].present?
           return if id_matches?
 
           render_errors(

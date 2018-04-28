@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-shared_examples "reform validates presence of" do |key|
+shared_examples 'reform validates presence of' do |key|
   let(:attributes) { nil }
 
   specify do
@@ -13,12 +13,12 @@ shared_examples "reform validates presence of" do |key|
   end
 end
 
-shared_examples "reform validates string not blank" do |*keys|
+shared_examples 'reform validates string not blank' do |*keys|
   let(:attributes) { nil }
 
   keys.each do |key|
     specify do
-      attributes[key.to_sym] = " "
+      attributes[key.to_sym] = ' '
       expect(validate).to eq(false), failure_message(key)
     end
 
@@ -28,7 +28,7 @@ shared_examples "reform validates string not blank" do |*keys|
   end
 end
 
-shared_examples "reform strips whitespace" do |*keys|
+shared_examples 'reform strips whitespace' do |*keys|
   let(:attributes) { nil }
 
   keys.each do |key|
@@ -43,7 +43,7 @@ shared_examples "reform strips whitespace" do |*keys|
 
     def failure_message(key)
       "Expected to strip whitespace from #{key}, " \
-      "but whitespace was not stripped"
+      'but whitespace was not stripped'
     end
   end
 end
