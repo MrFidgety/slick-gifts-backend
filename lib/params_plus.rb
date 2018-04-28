@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "hash_plus"
+require 'hash_plus'
 
 class ParamsPlus
   def initialize(params, belongs_to: [], has_many: [])
@@ -76,8 +76,8 @@ class ParamsPlus
     end
 
     def nesting_for(_attrs, relationship)
-      params["data"]["relationships"][relationship]["data"].map do |data|
-        parse_data("data" => data.to_unsafe_hash)
+      params['data']['relationships'][relationship]['data'].map do |data|
+        parse_data('data' => data.to_unsafe_hash)
       end
     end
 
@@ -95,16 +95,16 @@ class ParamsPlus
     end
 
     def relationship_params(relationship)
-      params["data"]["relationships"][relationship]
+      params['data']['relationships'][relationship]
     end
 
     def unsetting_relationship?(params)
-      params.present? && params.key?("data") && params["data"].blank?
+      params.present? && params.key?('data') && params['data'].blank?
     end
 
     class << self
       def param_true?(value)
-        (value.to_s != "false") && (value.to_s != "0") && (value.to_s != "")
+        (value.to_s != 'false') && (value.to_s != '0') && (value.to_s != '')
       end
     end
 end

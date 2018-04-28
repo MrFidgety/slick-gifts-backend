@@ -27,7 +27,7 @@ RSpec.configure do |_c|
 
   class TestError
     def status
-      "422"
+      '422'
     end
   end
 end

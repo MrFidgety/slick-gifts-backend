@@ -29,7 +29,7 @@ module Users
           @user = form.model
 
           unless success && form.save
-            add_error_to_base("Failed to save user", form.errors)
+            add_error_to_base('Failed to save user', form.errors)
           end
         end
       end

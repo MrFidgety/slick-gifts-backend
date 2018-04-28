@@ -27,7 +27,7 @@ module Users
           @user = user
 
           unless user.errors.empty?
-            error_and_rollback("Failed to confirm user", user.errors)
+            error_and_rollback('Failed to confirm user', user.errors)
           end
         end
       end
@@ -36,7 +36,7 @@ module Users
         DeviseSessionable::Session.create(authable: user).tap do |session|
           @session = session
 
-          error_and_rollback("Failed to create session") unless session
+          error_and_rollback('Failed to create session') unless session
         end
       end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rspec/expectations"
+require 'rspec/expectations'
 
 RSpec::Matchers.define :render_primary_resource do |expected|
   match do |_actual|
@@ -121,7 +121,7 @@ RSpec::Matchers.define :match_error_title do |expected|
   end
 
   def actual_titles
-    actual_errors.map_to("title")
+    actual_errors.map_to('title')
   end
 end
 
@@ -166,10 +166,10 @@ RSpec::Matchers.define :have_top_level_links do |expected|
   end
 
   def links_key_present?(actual)
-    json(actual.body).keys.include? "links"
+    json(actual.body).keys.include? 'links'
   end
 
   def actual_url_for_key(actual, key)
-    json(actual.body).dig("links", key.to_s)&.split("?")&.first
+    json(actual.body).dig('links', key.to_s)&.split('?')&.first
   end
 end

@@ -1,49 +1,49 @@
 # frozen_string_literal: true
 
-require "rspec/expectations"
+require 'rspec/expectations'
 
-shared_examples "a data validation action" do
-  include_examples "missing data key returns bad request"
-  include_examples "invalid data type returns conflict"
+shared_examples 'a data validation action' do
+  include_examples 'missing data key returns bad request'
+  include_examples 'invalid data type returns conflict'
 end
 
-shared_examples "invalid inclusions returns bad request" do
-  describe "Bad Request" do
+shared_examples 'invalid inclusions returns bad request' do
+  describe 'Bad Request' do
     let(:expected_error) do
       {
-        status: "400",
+        status: '400',
         title: I18n.t(:"renderror.bad_request.title")
       }
     end
 
-    before { params[:include] = "foobar" }
+    before { params[:include] = 'foobar' }
 
     it { is_expected.to have_http_status :bad_request }
     it { is_expected.to match_error(expected_error) }
   end
 end
 
-shared_examples "missing data key returns bad request" do
-  describe "Bad Request" do
+shared_examples 'missing data key returns bad request' do
+  describe 'Bad Request' do
     let(:expected_error) do
       {
-        status: "400",
+        status: '400',
         title: I18n.t(:"renderror.bad_request.title")
       }
     end
 
-    before { params.delete("data") }
+    before { params.delete('data') }
 
     it { is_expected.to have_http_status :bad_request }
     it { is_expected.to match_error(expected_error) }
   end
 end
 
-shared_examples "an authenticated endpoint" do
-  describe "Unauthorized" do
+shared_examples 'an authenticated endpoint' do
+  describe 'Unauthorized' do
     let(:expected_error) do
       {
-        status: "401",
+        status: '401',
         title: I18n.t(:"renderror.unauthorized.title")
       }
     end
@@ -55,11 +55,11 @@ shared_examples "an authenticated endpoint" do
   end
 end
 
-shared_examples "authorization is required" do
-  describe "Forbidden" do
+shared_examples 'authorization is required' do
+  describe 'Forbidden' do
     let(:expected_error) do
       {
-        status: "403",
+        status: '403',
         title: I18n.t(:"renderror.forbidden.title")
       }
     end
@@ -74,11 +74,11 @@ shared_examples "authorization is required" do
   end
 end
 
-shared_examples "non-existent resource returns not found" do
-  describe "Not Found" do
+shared_examples 'non-existent resource returns not found' do
+  describe 'Not Found' do
     let(:expected_error) do
       {
-        status: "404",
+        status: '404',
         title: I18n.t(:"renderror.not_found.title")
       }
     end
@@ -88,53 +88,53 @@ shared_examples "non-existent resource returns not found" do
   end
 end
 
-shared_examples "invalid data type returns conflict" do
-  describe "Conflict" do
+shared_examples 'invalid data type returns conflict' do
+  describe 'Conflict' do
     let(:expected_error) do
       {
-        status: "409",
+        status: '409',
         title: I18n.t(:"renderror.conflict.title"),
         detail: I18n.t(:"renderror.conflict.type_mismatch")
       }
     end
 
-    before { params["data"]["type"] = "foobar" }
+    before { params['data']['type'] = 'foobar' }
 
     it { is_expected.to have_http_status :conflict }
     it { is_expected.to match_error(expected_error) }
   end
 end
 
-shared_examples "resource id mismatch returns conflict" do
-  describe "Conflict" do
+shared_examples 'resource id mismatch returns conflict' do
+  describe 'Conflict' do
     let(:expected_error) do
       {
-        status: "409",
+        status: '409',
         title: I18n.t(:"renderror.conflict.title"),
         detail: I18n.t(:"renderror.conflict.id_mismatch")
       }
     end
 
-    before { params["id"] = "foobar" }
+    before { params['id'] = 'foobar' }
 
     it { is_expected.to have_http_status :conflict }
     it { is_expected.to match_error(expected_error) }
   end
 end
 
-shared_examples "unprocessable action" do |action_klass, action_name|
-  let(:error_string) { "Something went wrong" }
+shared_examples 'unprocessable action' do |action_klass, action_name|
+  let(:error_string) { 'Something went wrong' }
 
   let(:action_errors) do
     TestErrors.new(error_string)
   end
   let(:failure_case) do
-    instance_double("TestUseCase", success?: false, errors: action_errors)
+    instance_double('TestUseCase', success?: false, errors: action_errors)
   end
 
   let(:expected_error) do
     {
-      status: "422",
+      status: '422',
       title: I18n.t(:"renderror.unprocessable_entity.title"),
       detail: error_string
     }

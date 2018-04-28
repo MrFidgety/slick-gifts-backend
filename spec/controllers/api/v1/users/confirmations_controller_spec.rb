@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Api::V1::Users::ConfirmationsController, type: :controller do
-  describe "GET show" do
+  describe 'GET show' do
     before { request_action :show }
 
     let(:user) { create(:user, :unconfirmed) }
@@ -13,7 +13,7 @@ RSpec.describe Api::V1::Users::ConfirmationsController, type: :controller do
 
     let(:success_case) do
       instance_double(
-        "Users::ConfirmUser",
+        'Users::ConfirmUser',
         success?: true,
         session: session
       )
@@ -23,12 +23,12 @@ RSpec.describe Api::V1::Users::ConfirmationsController, type: :controller do
 
     before { allow(Users).to receive(:confirm_user).and_return(success_case) }
 
-    describe "Success" do
+    describe 'Success' do
       it { is_expected.to have_http_status :ok }
       it { is_expected.to render_primary_resource session }
       it { is_expected.to render_included_resource user }
 
-      it "confirms the user" do
+      it 'confirms the user' do
         expect(Users).to receive(:confirm_user)
                             .with(attributes)
                             .and_return(success_case)
@@ -37,6 +37,6 @@ RSpec.describe Api::V1::Users::ConfirmationsController, type: :controller do
       end
     end
 
-    it_behaves_like "unprocessable action", Users, :confirm_user
+    it_behaves_like 'unprocessable action', Users, :confirm_user
   end
 end

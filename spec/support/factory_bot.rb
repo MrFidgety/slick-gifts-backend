@@ -20,7 +20,7 @@ RSpec.configure do |config|
   end
 end
 
-shared_examples "has a valid factory" do
+shared_examples 'has a valid factory' do
   specify do
     expect(form.validate(attributes_for(described_class_factory))).to eq true
   end

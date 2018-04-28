@@ -28,10 +28,10 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe UserSerializer, type: :serializer do
-  include_context "serializer"
+  include_context 'serializer'
 
   let(:resource) { build(:user) }
   let(:attributes) { %w[id email] }

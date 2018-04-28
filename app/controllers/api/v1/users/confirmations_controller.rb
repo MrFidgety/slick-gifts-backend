@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "params_plus"
+require 'params_plus'
 
 module Api
   module V1

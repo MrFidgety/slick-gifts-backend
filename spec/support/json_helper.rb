@@ -8,22 +8,22 @@ RSpec.configure do
   end
 
   def deserialize_many(response)
-    json(response).fetch("data").map do |resource|
+    json(response).fetch('data').map do |resource|
       ActiveModelSerializers::Deserialization.jsonapi_parse!(
-        "data" => resource
+        'data' => resource
       )
     end
   end
 
   def deserialize_included(response)
-    json(response)["included"]&.map do |included|
-      data = { "data" => included }
+    json(response)['included']&.map do |included|
+      data = { 'data' => included }
       ActiveModelSerializers::Deserialization.jsonapi_parse!(data)
     end
   end
 
   def deserialize_errors(response)
-    json(response)["errors"]&.map(&:with_indifferent_access)
+    json(response)['errors']&.map(&:with_indifferent_access)
   end
 
   def json(response)

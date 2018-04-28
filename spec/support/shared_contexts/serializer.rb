@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "rspec/expectations"
+require 'rspec/expectations'
 
-shared_context "serializer" do
+shared_context 'serializer' do
   let(:resource) { nil }
   let(:serializer) { described_class.new(resource) }
 
