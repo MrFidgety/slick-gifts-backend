@@ -6,7 +6,7 @@ class DeviseMailer < Devise::Mailer
   helper :application # access to all helpers within `application_helper`.
 
   default template_path: 'devise/mailer'
-  default from: 'noreply@slickgifts.com'
+  default from: 'noreply@slick.gifts'
 
   def confirmation_instructions(record, token, opts = {})
     @resource = record
