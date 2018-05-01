@@ -75,6 +75,8 @@ group :development, :test do
   gem 'annotate', github: 'ctran/annotate_models'
   # Open emails in browser rather than sending them
   gem 'letter_opener'
+  # Manage environment variables
+  gem 'dotenv-rails'
 
   # TESTING
   # =======

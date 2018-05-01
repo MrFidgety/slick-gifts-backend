@@ -11,9 +11,9 @@ class DeviseMailer < Devise::Mailer
   def confirmation_instructions(record, token, opts = {})
     @resource = record
     @token = token
+    @frontend_url = Rails.application.config.frontend_url
+    @confirmation_url = "#{@frontend_url}/confirm?token=#{token}"
 
-    mail(to: record.email) do |format|
-      format.mjml
-    end
+    mail(to: record.email) { |format| format.mjml }
   end
 end
