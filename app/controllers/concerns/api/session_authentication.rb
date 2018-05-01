@@ -10,7 +10,7 @@ module Api
       acts_as_token_authentication_handler_for_session
     end
 
-    module ClassMethods
+    class_methods do
       def acts_as_token_authentication_handler_for_session(skip: nil)
         acts_as_token_authentication_handler_for DeviseSessionable::Session,
                                                  as: :session,
@@ -22,5 +22,11 @@ module Api
         acts_as_token_authentication_handler_for_session(skip: actions)
       end
     end
+
+    private
+
+      def current_authable
+        current_user
+      end
   end
 end

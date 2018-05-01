@@ -1,5 +1,7 @@
 {
   "name": "slick-gifts-backend",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "mjml": "^4.0.0"
+  }
 }

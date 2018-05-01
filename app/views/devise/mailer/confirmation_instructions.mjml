@@ -1,0 +1,10 @@
+<mjml>
+  <mj-body>
+    <mj-container>
+      <mj-text>Welcome to Slick Gifts</mj-text>
+			<mj-text>
+				<%= link_to 'Confirm my account', @confirmation_url %>
+			</mj-text>
+    </mj-container>
+  </mj-body>
+</mjml>

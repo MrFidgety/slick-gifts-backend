@@ -55,5 +55,8 @@ module SlickGiftsBackend
                  methods: %i[get post delete put patch options head]
       end
     end
+
+    # Web app url
+    config.frontend_url = ENV.fetch('FRONTEND_URL', 'http://localhost:4200')
   end
 end
