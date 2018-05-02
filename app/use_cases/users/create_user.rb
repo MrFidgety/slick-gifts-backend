@@ -14,7 +14,7 @@ module Users
       init_form
       save_user
 
-      resend_confirmation if unconfirmed_user
+      resend_confirmation if should_resend_confirmation?
     end
 
     private
@@ -41,6 +41,14 @@ module Users
         @unconfirmed_user = User.find_by(
           email: attributes[:email], confirmed_at: nil
         )
+      end
+
+      def should_resend_confirmation?
+        unconfirmed_user.present? && not_sent_recently?
+      end
+
+      def not_sent_recently?
+        (Time.current - unconfirmed_user.confirmation_sent_at) > 1.minute
       end
 
       def resend_confirmation

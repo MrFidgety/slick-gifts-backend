@@ -38,9 +38,19 @@ RSpec.describe Users::CreateUser do
         end.to change(user, :encrypted_password)
       end
 
-      it 'resends the confirmation email' do
+      it 'resends the confirmation email if it was last sent >1min' do
+        user.update(confirmation_sent_at: 2.minutes.ago)
+
         Sidekiq::Testing.inline! do
           expect { perform }.to change(Devise::Mailer.deliveries, :count).by 1
+        end
+      end
+
+      it 'does not resend the confirmation email if it was last sent <1min' do
+        user.update(confirmation_sent_at: 50.seconds.ago)
+
+        Sidekiq::Testing.inline! do
+          expect { perform }.not_to change(Devise::Mailer.deliveries, :count)
         end
       end
     end
