@@ -21,6 +21,53 @@ RSpec.describe Users::CreateUser do
         expect { perform }.to change(Devise::Mailer.deliveries, :count).by 1
       end
     end
+
+    describe 'unconfirmed user already exists' do
+      let!(:user) do
+        create(:user, :unconfirmed, email: user_attributes[:email])
+      end
+
+      it 'does not create a user' do
+        expect { perform }.not_to change(User, :count)
+      end
+
+      it 'updates the password' do
+        expect do
+          perform
+          user.reload
+        end.to change(user, :encrypted_password)
+      end
+
+      it 'resends the confirmation email if it was last sent >1min' do
+        user.update(confirmation_sent_at: 2.minutes.ago)
+
+        Sidekiq::Testing.inline! do
+          expect { perform }.to change(Devise::Mailer.deliveries, :count).by 1
+        end
+      end
+
+      it 'does not resend the confirmation email if it was last sent <1min' do
+        user.update(confirmation_sent_at: 50.seconds.ago)
+
+        Sidekiq::Testing.inline! do
+          expect { perform }.not_to change(Devise::Mailer.deliveries, :count)
+        end
+      end
+    end
+  end
+
+  describe 'confirmed user already exists' do
+    let!(:user) { create(:user, user_attributes) }
+
+    it { is_expected.not_to perform_successfully }
+
+    it 'does not create a user' do
+      expect { perform }.not_to change(User, :count)
+    end
+
+    it 'adds form errors to the use case' do
+      expect(perform.errors.messages).not_to be_empty
+    end
   end
 
   describe 'invalid attributes' do

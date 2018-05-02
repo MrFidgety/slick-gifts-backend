@@ -8,6 +8,8 @@ module Api
 
     included do
       acts_as_token_authentication_handler_for_session
+
+      skip_before_action :verify_authenticity_token
     end
 
     class_methods do
