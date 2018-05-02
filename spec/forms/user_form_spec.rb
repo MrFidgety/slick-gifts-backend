@@ -40,7 +40,7 @@ RSpec.describe UserForm do
       expect(validate).to eq false
     end
 
-    it 'validates uniquness' do
+    it 'validates uniqueness' do
       create(:user, email: user_attributes[:email])
 
       expect(validate).to eq false
