@@ -3,16 +3,3 @@ en:
     unique?: "already exists"
     not_blank?: "must not be blank"
     email_address?: "is not a valid email address"
-  renderror:
-    bad_request:
-      title: "Bad Request"
-    unauthorized:
-      title: "Unauthorized"
-    forbidden:
-      title: "Forbidden"
-    conflict:
-      title: "Conflict"
-      type_mismatch: "Incorrect type specified"
-      id_mismatch: "Incorrect resource ID"
-    unprocessable_entity:
-      title: "Unprocessable Entity"
