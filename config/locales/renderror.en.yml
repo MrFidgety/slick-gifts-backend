@@ -1,0 +1,27 @@
+en:
+  renderror:
+    base_error:
+      detail: Bad Request
+      status: '400'
+      title: Bad Request
+    bad_request:
+      title: Bad Request
+      detail: Bad Request
+    unauthorized:
+      title: Unauthorized
+      detail: You need to sign in or sign up before continuing
+      invalid_auth: Invalid email or password.
+    forbidden:
+      title: Forbidden
+      detail: Forbidden
+    not_found:
+      title: Not Found
+      detail: Not Found
+    unprocessable_entity:
+      title: Unprocessable Entity
+      detail: Unprocessable Entity
+    conflict:
+      title: Conflict
+      detail: Incorrect type specified
+      id_mismatch: Incorrect type specified
+      type_mismatch: Incorrect resource ID

@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  devise_for :users, skip: :all
+
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      devise_for :users, skip: :all
+      resources :sessions, only: %i[create destroy]
 
       resources :users, only: %i[create] do
         collection do

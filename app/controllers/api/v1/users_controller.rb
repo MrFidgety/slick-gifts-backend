@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'params_plus'
-
 module Api
   module V1
     class UsersController < ApiController

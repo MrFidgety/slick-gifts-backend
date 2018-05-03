@@ -82,7 +82,7 @@ shared_examples 'non-existent resource returns not found' do
         title: I18n.t(:"renderror.not_found.title")
       }
     end
-    type specified
+
     it { is_expected.to have_http_status :not_found }
     it { is_expected.to match_error(expected_error) }
   end
@@ -122,7 +122,7 @@ shared_examples 'resource id mismatch returns conflict' do
   end
 end
 
-shared_examples 'unprocessable action' do |action_klass, action_name|
+shared_examples 'an unprocessable action' do |action_klass, action_name|
   let(:error_string) { 'Something went wrong' }
 
   let(:action_errors) do
