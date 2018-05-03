@@ -36,6 +36,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
 
     it_behaves_like 'a data validation action'
-    it_behaves_like 'unprocessable action', Users, :create_user
+    it_behaves_like 'an unprocessable action', Users, :create_user
   end
 end

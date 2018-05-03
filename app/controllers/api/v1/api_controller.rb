@@ -6,9 +6,11 @@ module Api
       respond_to :json
       responders :json
 
-      renderror_auto_rescue :bad_request, :invalid_document
+      renderror_auto_rescue :bad_request, :cancan, :not_found,
+                            :invalid_document, :conflict
 
       include Api::SessionAuthentication
+      include Api::AuthorizeResources
       include Api::ValidateRequestBody
       include Api::ResponseOptions
       include Api::TopLevelMeta

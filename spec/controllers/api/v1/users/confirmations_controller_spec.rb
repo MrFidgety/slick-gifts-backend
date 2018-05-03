@@ -37,6 +37,6 @@ RSpec.describe Api::V1::Users::ConfirmationsController, type: :controller do
       end
     end
 
-    it_behaves_like 'unprocessable action', Users, :confirm_user
+    it_behaves_like 'an unprocessable action', Users, :confirm_user
   end
 end

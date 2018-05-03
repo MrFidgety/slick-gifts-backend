@@ -42,6 +42,12 @@ module Api
         def id_matches?
           params.dig(:data, :id) == params[:id]
         end
+
+        def deserialize(params, options = {})
+          ActiveModelSerializers::Deserialization.jsonapi_parse!(
+            params, options
+          )
+        end
     end
   end
 end
