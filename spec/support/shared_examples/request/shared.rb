@@ -159,11 +159,11 @@ shared_examples 'request with failed action returns unprocessable' do
       {
         status: '422',
         title: I18n.t(:"renderror.unprocessable_entity.title"),
-        detail:  error_detail,
-        source: {
-          pointer: error_pointer
-        }
-      }
+        detail:  error_detail
+      }.merge(pointer)
+    end
+    let(:pointer) do
+      error_pointer.present? ? { source: { pointer: error_pointer } } : {}
     end
 
     it 'when action fails' do

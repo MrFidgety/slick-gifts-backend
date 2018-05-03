@@ -36,6 +36,12 @@ FactoryBot.define do
       confirmed false
     end
 
+    trait :with_session do
+      after :create do |user|
+        create(:session, authable: user)
+      end
+    end
+
     after(:build) do |user, evaluator|
       if evaluator.confirmed
         # Set user to be confirmed by default
