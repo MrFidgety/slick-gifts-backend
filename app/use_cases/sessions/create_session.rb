@@ -15,7 +15,7 @@ module Sessions
     end
 
     def perform
-      create_session if valid_type? && authenticated_user?
+      create_session if valid_user_authentication?
     end
 
     private
@@ -23,6 +23,16 @@ module Sessions
       attr_reader :access_type
       attr_reader :passkey
       attr_reader :passcode
+
+      def valid_user_authentication?
+        valid_type? && authenticated_user? && confirmed_user?
+      end
+
+      def confirmed_user?
+        user.confirmed?.tap do |success|
+          add_error_to_base(I18n.t(:'devise.auth.unconfirmed')) unless success
+        end
+      end
 
       def valid_type?
         VALID_ACCESS_TYPES.include?(access_type).tap do |success|

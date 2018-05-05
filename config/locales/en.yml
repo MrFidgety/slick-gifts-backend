@@ -1,5 +1,5 @@
 en:
   errors:
-    unique?: "already exists"
+    unique?: "must be unique"
     not_blank?: "must not be blank"
-    email_address?: "is not a valid email address"
+    email_address?: "must be a valid email address"

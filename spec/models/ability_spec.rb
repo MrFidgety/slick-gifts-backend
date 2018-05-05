@@ -14,7 +14,7 @@ RSpec.describe Ability do
       end
 
       it 'cannot manage other sessions' do
-        expect(subject).to_not be_able_to(
+        expect(subject).not_to be_able_to(
           :create, :read, :update, :destroy, create(:session)
         )
       end
