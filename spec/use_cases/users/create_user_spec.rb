@@ -99,7 +99,7 @@ RSpec.describe Users::CreateUser do
       allow_any_instance_of(UserForm).to receive(:save) { false }
     end
 
-    it { is_expected.to_not perform_successfully }
+    it { is_expected.not_to perform_successfully }
 
     it 'adds a base error to the use case' do
       expect(perform.errors[:base]).to include 'Failed to save user'

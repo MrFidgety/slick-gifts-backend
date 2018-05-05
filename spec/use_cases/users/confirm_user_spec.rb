@@ -67,7 +67,7 @@ RSpec.describe Users::ConfirmUser do
 
     before { user.update(confirmation_sent_at: Devise.confirm_within.ago) }
 
-    it { is_expected.to_not perform_successfully }
+    it { is_expected.not_to perform_successfully }
 
     it 'does not confirm the user' do
       expect do
@@ -95,7 +95,7 @@ RSpec.describe Users::ConfirmUser do
       user.reload
     end
 
-    it { is_expected.to_not perform_successfully }
+    it { is_expected.not_to perform_successfully }
 
     it 'does not change the user confirmed status' do
       expect do
@@ -118,7 +118,7 @@ RSpec.describe Users::ConfirmUser do
       allow(DeviseSessionable::Session).to receive(:create).and_return(false)
     end
 
-    it { is_expected.to_not perform_successfully }
+    it { is_expected.not_to perform_successfully }
 
     it 'does not confirm the user' do
       expect do
