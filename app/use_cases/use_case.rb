@@ -43,9 +43,7 @@ module UseCase
 
     def add_reform_errors(reform_errors)
       reform_errors.messages.each do |(attr, messages)|
-        messages.each do |message|
-          errors.add(attr, message)
-        end
+        errors.add(attr, messages.first)
       end
     end
 end

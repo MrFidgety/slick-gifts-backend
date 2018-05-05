@@ -73,19 +73,12 @@ RSpec.describe Users::CreateUser do
   describe 'invalid attributes' do
     let(:form_errors) do
       Reform::Contract::Errors.new.tap do |e|
-        e.add(:email, 'must be filled')
+        e.add(:email, I18n.t(:'errors.not_blank?'))
+        e.add(:email, I18n.t(:'errors.email_address?'))
       end
     end
 
-    let(:failure_case) do
-      instance_double(
-        'UserForm', validate: false, model: nil, errors: form_errors
-      )
-    end
-
-    before do
-      allow(UserForm).to receive(:new).and_return(failure_case)
-    end
+    before { user_attributes.delete(:email) }
 
     it { is_expected.not_to perform_successfully }
 
@@ -93,8 +86,11 @@ RSpec.describe Users::CreateUser do
       expect { perform }.not_to change(User, :count)
     end
 
-    it 'adds form errors to the use case' do
-      expect(perform.errors.messages).to include form_errors.messages
+    it 'adds the first of each form error to the use case' do
+      actual = perform.errors.messages[:email]
+      expected = [form_errors.messages[:email].first]
+
+      expect(actual).to eq expected
     end
   end
 
