@@ -33,6 +33,24 @@ RSpec.describe Sessions::CreateSession do
     end
   end
 
+  describe 'unconfirmed user' do
+    let(:expected_error) do
+      { base: [I18n.t(:"devise.auth.unconfirmed")] }
+    end
+
+    let!(:user) { create(:user, :unconfirmed) }
+
+    it { is_expected.not_to perform_successfully }
+
+    it 'does not create a session' do
+      expect { perform }.not_to change(DeviseSessionable::Session, :count)
+    end
+
+    it 'adds errors to the use case' do
+      expect(perform.errors.messages).to include expected_error
+    end
+  end
+
   describe 'invalid credentials' do
     let(:expected_error) do
       { base: [I18n.t(:"devise.auth.password.failure")] }
@@ -41,7 +59,7 @@ RSpec.describe Sessions::CreateSession do
     context 'invalid password' do
       before { session_attributes[:passcode] = 'invalid' }
 
-      it { is_expected.to_not perform_successfully }
+      it { is_expected.not_to perform_successfully }
 
       it 'does not create a session' do
         expect { perform }.not_to change(DeviseSessionable::Session, :count)
@@ -55,7 +73,7 @@ RSpec.describe Sessions::CreateSession do
     context 'missing email' do
       before { session_attributes.delete(:passkey) }
 
-      it { is_expected.to_not perform_successfully }
+      it { is_expected.not_to perform_successfully }
 
       it 'does not create a session' do
         expect { perform }.not_to change(DeviseSessionable::Session, :count)
@@ -69,7 +87,7 @@ RSpec.describe Sessions::CreateSession do
     context 'missing password' do
       before { session_attributes.delete(:passcode) }
 
-      it { is_expected.to_not perform_successfully }
+      it { is_expected.not_to perform_successfully }
 
       it 'does not create a session' do
         expect { perform }.not_to change(DeviseSessionable::Session, :count)
@@ -88,7 +106,7 @@ RSpec.describe Sessions::CreateSession do
 
     before { session_attributes[:access_type] = 'invalid' }
 
-    it { is_expected.to_not perform_successfully }
+    it { is_expected.not_to perform_successfully }
 
     it 'does not create a session' do
       expect { perform }.not_to change(DeviseSessionable::Session, :count)
@@ -104,7 +122,7 @@ RSpec.describe Sessions::CreateSession do
       allow(DeviseSessionable::Session).to receive(:create).and_return(false)
     end
 
-    it { is_expected.to_not perform_successfully }
+    it { is_expected.not_to perform_successfully }
 
     it 'adds a base error to the use case' do
       expect(perform.errors[:base]).to include 'Failed to create session'

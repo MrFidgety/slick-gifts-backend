@@ -9,6 +9,7 @@ en:
       invalid_type: "Invalid access type."
       password:
         failure: "Invalid email address or password."
+      unconfirmed: "Your account is not activated yet. Sign up to resend email."
     confirmations:
       confirmed: "Your email address has been successfully confirmed."
       send_instructions: "You will receive an email with instructions for how to confirm your email address in a few minutes."
