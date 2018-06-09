@@ -19,25 +19,25 @@ module Users
 
     private
 
-      attr_reader :attributes
-      attr_reader :user
+    attr_reader :attributes
+    attr_reader :user
 
-      def confirm_user_by_token
-        User.confirm_by_token(attributes[:confirmation_token]).tap do |user|
-          @user = user
+    def confirm_user_by_token
+      User.confirm_by_token(attributes[:confirmation_token]).tap do |user|
+        @user = user
 
-          unless user.errors.empty?
-            error_and_rollback('Failed to confirm user', user.errors)
-          end
+        unless user.errors.empty?
+          error_and_rollback('Failed to confirm user', user.errors)
         end
       end
+    end
 
-      def create_session
-        DeviseSessionable::Session.create(authable: user).tap do |session|
-          @session = session
+    def create_session
+      DeviseSessionable::Session.create(authable: user).tap do |session|
+        @session = session
 
-          error_and_rollback('Failed to create session') unless session
-        end
+        error_and_rollback('Failed to create session') unless session
       end
+    end
   end
 end

@@ -5,7 +5,7 @@ require 'reform/form/dry'
 class UserForm < Reform::Form
   include StripWhitespace
 
-  feature Reform::Form::Dry
+  feature Dry
 
   property :email
   property :password

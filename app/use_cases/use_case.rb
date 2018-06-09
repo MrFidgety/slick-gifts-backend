@@ -35,15 +35,15 @@ module UseCase
 
   private
 
-    def add_sub_errors(sub_errors)
-      return add_reform_errors(sub_errors) unless sub_errors.respond_to? :each
+  def add_sub_errors(sub_errors)
+    return add_reform_errors(sub_errors) unless sub_errors.respond_to? :each
 
-      sub_errors.each { |attr, message| errors.add(attr, message) }
-    end
+    sub_errors.each { |attr, message| errors.add(attr, message) }
+  end
 
-    def add_reform_errors(reform_errors)
-      reform_errors.messages.each do |(attr, messages)|
-        errors.add(attr, messages.first)
-      end
+  def add_reform_errors(reform_errors)
+    reform_errors.messages.each do |(attr, messages)|
+      errors.add(attr, messages.first)
     end
+  end
 end

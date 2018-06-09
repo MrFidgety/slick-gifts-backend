@@ -1,5 +1,6 @@
 en:
   errors:
-    unique?: "must be unique"
-    not_blank?: "must not be blank"
-    email_address?: "must be a valid email address"
+    unique?: must be unique
+    not_blank?: must not be blank
+    email_address?: must be a valid email address
+    different_user?: cannot be yourself

@@ -12,25 +12,25 @@ module Api
 
       private
 
-        def authorize_resources
-          return unless authorization_rules.key? action_name.to_sym
+      def authorize_resources
+        return unless authorization_rules.key? action_name.to_sym
 
-          rules.each do |resource, ability|
-            [*send(resource)].each { |r| authorize! ability, r, message: message }
-          end
+        rules.each do |resource, ability|
+          [*send(resource)].each { |r| authorize! ability, r, message: message }
         end
+      end
 
-        def related_model
-          controller_name.classify.constantize
-        end
+      def related_model
+        controller_name.classify.constantize
+      end
 
-        def rules
-          authorization_rules[action_name.to_sym][:auths]
-        end
+      def rules
+        authorization_rules[action_name.to_sym][:auths]
+      end
 
-        def message
-          authorization_rules[action_name.to_sym][:message]
-        end
+      def message
+        authorization_rules[action_name.to_sym][:message]
+      end
     end
 
     class_methods do

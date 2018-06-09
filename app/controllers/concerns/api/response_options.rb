@@ -31,26 +31,26 @@ module Api
     included do
       private
 
-        def respond_with(resource, options = {})
-          super(resource, response_options(resource, action_name)
-            .deep_merge(options))
-        end
+      def respond_with(resource, options = {})
+        super(resource, response_options(resource, action_name)
+          .deep_merge(options))
+      end
 
-        def response_options(resource, action)
-          self.class.modifiers_for_action(action).reduce({}) do |acc, methods|
-            modified_options(acc, methods, action, resource)
-          end
+      def response_options(resource, action)
+        self.class.modifiers_for_action(action).reduce({}) do |acc, methods|
+          modified_options(acc, methods, action, resource)
         end
+      end
 
-        def modified_options(base, methods, action, resource)
-          methods.reduce(base) do |acc, method|
-            acc.deep_merge(computed_option(method, action, resource))
-          end
+      def modified_options(base, methods, action, resource)
+        methods.reduce(base) do |acc, method|
+          acc.deep_merge(computed_option(method, action, resource))
         end
+      end
 
-        def computed_option(method, action, resource)
-          send(method, action, resource)
-        end
+      def computed_option(method, action, resource)
+        send(method, action, resource)
+      end
     end
   end
 end

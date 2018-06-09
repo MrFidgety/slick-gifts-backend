@@ -27,8 +27,8 @@ module Api
 
     private
 
-      def current_authable
-        current_user
-      end
+    def current_authable
+      current_user
+    end
   end
 end

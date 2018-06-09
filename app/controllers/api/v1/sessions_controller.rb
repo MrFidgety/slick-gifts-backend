@@ -24,15 +24,15 @@ module Api
 
       private
 
-        def session_attributes
-          @session_attributes ||= deserialize(
-            params, only: %w[access-type passkey passcode]
-          )
-        end
+      def session_attributes
+        @session_attributes ||= deserialize(
+          params, only: %w[access-type passkey passcode]
+        )
+      end
 
-        def resource
-          @resource ||= DeviseSessionable::Session.find(params[:id])
-        end
+      def resource
+        @resource ||= DeviseSessionable::Session.find(params[:id])
+      end
     end
   end
 end

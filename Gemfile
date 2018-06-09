@@ -23,8 +23,8 @@ gem 'rails', '~> 5.2.0'
 gem 'sidekiq'
 # Use symbols and keyword arguments with Sidekiq
 gem 'sidekiq-symbols'
-# Use Unicon as the app server
-gem 'unicorn'
+# Use Puma as the app server
+gem 'puma'
 
 # AUTHENTICATION
 # ==============
@@ -58,6 +58,8 @@ gem 'mjml-rails'
 gem 'reform-rails'
 # Model validation
 gem 'dry-validation', '~> 0.11'
+# Error logging
+gem 'sentry-raven'
 
 group :development, :test, :staging do
   # Factory Bot to create objects for your tests

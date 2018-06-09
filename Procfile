@@ -1,2 +1,2 @@
-web: bundle exec unicorn_rails -c config/unicorn.rb
+web: bundle exec puma -C config/puma.rb
 worker: bundle exec sidekiq

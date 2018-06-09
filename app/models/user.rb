@@ -31,6 +31,9 @@ class User < ApplicationRecord
   devise :confirmable, :database_authenticatable, :registerable, :recoverable,
          :validatable
 
+  has_many :friend_requests, dependent: :destroy
+  has_many :pending_friends, through: :friend_requests, source: :friend
+
   # Force devise emails to be sent in workers
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

@@ -17,13 +17,13 @@ module Api
 
       private
 
-        def user_attributes
-          @user_attributes ||= params_plus.form_attributes.to_hash
-        end
+      def user_attributes
+        @user_attributes ||= params_plus.form_attributes.to_hash
+      end
 
-        def params_plus
-          @params_plus ||= ParamsPlus.new(params)
-        end
+      def params_plus
+        @params_plus ||= ParamsPlus.new(params)
+      end
     end
   end
 end

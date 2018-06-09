@@ -27,4 +27,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   it_behaves_like 'has a valid factory'
+
+  it { is_expected.to have_many(:friend_requests).dependent(:destroy) }
+  it { is_expected.to have_many(:pending_friends).through(:friend_requests) }
 end

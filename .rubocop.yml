@@ -8,6 +8,7 @@ AllCops:
     - '**/templates/**/*'
     - '**/vendor/**/*'
     - 'actionpack/lib/action_dispatch/journey/parser.rb'
+    - 'db/schema.rb'
 
 # Prefer &&/|| over and/or.
 Style/AndOr:
@@ -55,8 +56,7 @@ Style/HashSyntax:
 # Method definitions after `private` or `protected` isolated calls need one
 # extra level of indentation.
 Layout/IndentationConsistency:
-  Enabled: true
-  EnforcedStyle: rails
+  Enabled: false
 
 # Two spaces, no tabs (for indentation).
 Layout/IndentationWidth:
