@@ -79,5 +79,23 @@ RSpec.describe Ability do
         end
       end
     end
+
+    context 'users' do
+      it 'cannot list friends' do
+        expect(subject).not_to be_able_to(:list_friends, create(:user))
+      end
+
+      it 'can list friends own friends' do
+        expect(subject).to be_able_to(:list_friends, authable)
+      end
+
+      context 'when friends' do
+        it 'can list friends' do
+          expect(subject).to be_able_to(
+            :list_friends, create(:user, friends: [authable])
+          )
+        end
+      end
+    end
   end
 end

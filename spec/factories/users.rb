@@ -42,6 +42,13 @@ FactoryBot.define do
       end
     end
 
+    trait :with_friends do
+      after :create do |user|
+        create_list(:friendship, 5, user: user)
+      end
+    end
+
+
     after(:build) do |user, evaluator|
       if evaluator.confirmed
         # Set user to be confirmed by default

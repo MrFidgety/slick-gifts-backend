@@ -9,11 +9,14 @@ module Api
       renderror_auto_rescue :bad_request, :cancan, :not_found,
                             :invalid_document, :conflict
 
-      include Api::SessionAuthentication
       include Api::AuthorizeResources
-      include Api::ValidateRequestBody
+      include Api::Pagination
+      include Api::Queries
+      include Api::RelatedResourceInclusion
       include Api::ResponseOptions
+      include Api::SessionAuthentication
       include Api::TopLevelMeta
+      include Api::ValidateRequestBody
     end
   end
 end

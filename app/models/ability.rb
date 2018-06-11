@@ -14,5 +14,8 @@ class Ability
     can :destroy, Friendship do |friendship|
       authable == friendship.user
     end
+    can :list_friends, User do |user|
+      authable == user || authable.friends.exists?(user.id)
+    end
   end
 end

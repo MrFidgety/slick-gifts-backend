@@ -39,6 +39,28 @@ shared_examples 'missing data key returns bad request' do
   end
 end
 
+shared_examples 'permits pagination' do
+  describe 'Success' do
+    before { params[:page] = { number: 2, size: 1 } }
+
+    it { is_expected.to have_http_status :ok }
+  end
+
+  describe 'Bad Request' do
+    let(:expected_error) do
+      {
+        status: '400',
+        title: I18n.t(:"renderror.bad_request.title")
+      }
+    end
+
+    before { params[:page] = 'foobar' }
+
+    it { is_expected.to have_http_status :bad_request }
+    it { is_expected.to match_error(expected_error) }
+  end
+end
+
 shared_examples 'an authenticated endpoint' do
   describe 'Unauthorized' do
     let(:expected_error) do

@@ -21,9 +21,9 @@ module Api
 
         private
 
-          def confirmation_attributes
-            params.permit(:confirmation_token).to_h
-          end
+        def confirmation_attributes
+          params.permit(:confirmation_token).to_h
+        end
       end
     end
   end

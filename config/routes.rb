@@ -21,6 +21,10 @@ Rails.application.routes.draw do
                                   as: :user_confirmation,
                                   controller: 'users/confirmations'
         end
+
+        resources :friends,
+                  only: %i[index],
+                  controller: 'users/friends'
       end
     end
   end
