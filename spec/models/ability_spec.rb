@@ -57,5 +57,27 @@ RSpec.describe Ability do
         end
       end
     end
+
+    context 'friendships' do
+      it 'cannot destroy friendships' do
+        expect(subject).not_to be_able_to(:destroy, create(:friendship))
+      end
+
+      context 'as user role' do
+        it 'can destroy friendships' do
+          expect(subject).to be_able_to(
+            :destroy, create(:friendship, user: authable)
+          )
+        end
+      end
+
+      context 'as friend role' do
+        it 'cannot destroy friendships' do
+          expect(subject).not_to be_able_to(
+            :destroy, create(:friendship, friend: authable)
+          )
+        end
+      end
+    end
   end
 end

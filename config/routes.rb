@@ -10,6 +10,8 @@ Rails.application.routes.draw do
         post :accept, on: :member
       end
 
+      resources :friendships, only: %i[destroy]
+
       resources :sessions, only: %i[create destroy]
 
       resources :users, only: %i[create] do

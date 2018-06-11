@@ -11,5 +11,8 @@ class Ability
     can :destroy, FriendRequest do |request|
       [request.user, request.friend].include? authable
     end
+    can :destroy, Friendship do |friendship|
+      authable == friendship.user
+    end
   end
 end
