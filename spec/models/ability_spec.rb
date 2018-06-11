@@ -19,5 +19,27 @@ RSpec.describe Ability do
         )
       end
     end
+
+    context 'friend requests' do
+      it 'cannot accept friend requests' do
+        expect(subject).not_to be_able_to(:accept, create(:friend_request))
+      end
+
+      context 'as user role' do
+        it 'cannot accept friend requests' do
+          expect(subject).not_to be_able_to(
+            :accept, create(:friend_request, user: authable)
+          )
+        end
+      end
+
+      context 'as friend role' do
+        it 'can accept friend requests' do
+          expect(subject).to be_able_to(
+            :accept, create(:friend_request, friend: authable)
+          )
+        end
+      end
+    end
   end
 end

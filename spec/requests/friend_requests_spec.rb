@@ -35,4 +35,30 @@ RSpec.describe 'Api::V1::FriendRequests', type: :request do
       let(:error_pointer) { '/data/attributes/friend' }
     end
   end
+
+  describe 'POST friend-requests/{id}/accept' do
+    before { request_path "/api/v1/friend-requests/#{id}/accept" }
+
+    let(:accepting_user) { create(:user, :with_session) }
+    let!(:friend_request) { create(:friend_request, friend: accepting_user) }
+    let(:id) { friend_request.id }
+    let(:params) { default_params }
+    let(:headers) { auth_headers_for_user(accepting_user) }
+
+    subject { do_post params: params, headers: headers }
+
+    it 'Success accepts the friend request' do
+      expect { subject }.to change(friend_request.user.friends, :count).by 1
+
+      expect(response).to have_http_status :created
+      expect(response).to match_primary_type 'friendships'
+    end
+
+    it_behaves_like 'request requires token authentication'
+    it_behaves_like 'request requires authorization'
+
+    it_behaves_like 'request with non-existent resource returns not found' do
+      let(:id) { 'foobar' }
+    end
+  end
 end

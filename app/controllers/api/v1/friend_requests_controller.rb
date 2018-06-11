@@ -3,6 +3,8 @@
 module Api
   module V1
     class FriendRequestsController < ApiController
+      authorize action: :accept, auths: { resource: :accept }
+
       def create
         action = FriendRequests.create_friend_request(friend_request_attributes)
 
@@ -13,7 +15,21 @@ module Api
         end
       end
 
+      def accept
+        action = FriendRequests.accept_friend_request(resource)
+
+        if action.success?
+          respond_with action.friendship
+        else
+          render_unprocessable action
+        end
+      end
+
       private
+
+      def resource
+        @resource ||= FriendRequest.find(params[:id])
+      end
 
       def friend_request_attributes
         @friend_request_attributes ||= params_plus.form_attributes

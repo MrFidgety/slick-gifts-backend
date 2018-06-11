@@ -77,4 +77,67 @@ RSpec.describe Api::V1::FriendRequestsController, type: :controller do
     it_behaves_like 'an unprocessable action',
                     FriendRequests, :create_friend_request
   end
+
+  describe 'POST accept' do
+    before { request_action :accept }
+
+    let(:friend) { build_with_id(:user) }
+
+    let(:friend_request) do
+      build_with_id(:friend_request, friend: friend)
+    end
+    let(:friendship) do
+      build_with_id(:friendship, user: friend)
+    end
+
+    let(:accept_action) do
+      instance_double(
+        'FriendRequests::AcceptFriendRequest',
+        success?: true,
+        friendship: friendship
+      )
+    end
+
+    let(:params) { default_params.merge(id: friend_request.id) }
+
+    subject { post :accept, params: params }
+
+    before do
+      authenticate_as(friend)
+
+      allow(FriendRequest).to receive(:find)
+        .with(friend_request.id)
+        .and_return(friend_request)
+
+      allow(FriendRequests).to receive(:accept_friend_request)
+        .with(friend_request)
+        .and_return(accept_action)
+    end
+
+    describe 'Success' do
+      it { is_expected.to have_http_status :created }
+      it { is_expected.to render_primary_resource friendship }
+
+      it 'accepts the friend request' do
+        expect(FriendRequests).to receive(:accept_friend_request)
+          .with(friend_request)
+
+        subject
+      end
+    end
+
+    it_behaves_like 'an authenticated endpoint'
+    it_behaves_like 'authorization is required'
+
+    it_behaves_like 'non-existent resource returns not found' do
+      before do
+        allow(FriendRequest).to receive(:find)
+          .with(friend_request.id)
+          .and_raise(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    it_behaves_like 'an unprocessable action',
+                    FriendRequests, :accept_friend_request
+  end
 end

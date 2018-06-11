@@ -12,8 +12,9 @@
 #
 # Indexes
 #
-#  index_friend_requests_on_friend_id  (friend_id)
-#  index_friend_requests_on_user_id    (user_id)
+#  index_friend_requests_on_friend_id              (friend_id)
+#  index_friend_requests_on_user_id                (user_id)
+#  index_friend_requests_on_user_id_and_friend_id  (user_id,friend_id) UNIQUE
 #
 # Foreign Keys
 #
@@ -24,4 +25,9 @@
 class FriendRequest < ApplicationRecord
   belongs_to :user
   belongs_to :friend, class_name: User.name
+
+  def accept
+    user.friends << friend
+    destroy
+  end
 end

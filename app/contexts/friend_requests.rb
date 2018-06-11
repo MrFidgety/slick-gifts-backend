@@ -5,5 +5,9 @@ module FriendRequests
     def create_friend_request(*args)
       FriendRequests::CreateFriendRequest.perform(*args)
     end
+
+    def accept_friend_request(*args)
+      FriendRequests::AcceptFriendRequest.perform(*args)
+    end
   end
 end

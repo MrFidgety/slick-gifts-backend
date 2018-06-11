@@ -20,9 +20,17 @@ class FriendRequestForm < Reform::Form
       def different_user?(value)
         value != form.user
       end
+
+      def request_unique?(value)
+        !FriendRequest.where(user: form.user, friend: value).exists?
+      end
+
+      def not_friends?(value)
+        !Friendship.where(user: form.user, friend: value).exists?
+      end
     end
 
     required(:user).filled
-    required(:friend).filled(:different_user?)
+    required(:friend).filled(:different_user?, :request_unique?, :not_friends?)
   end
 end

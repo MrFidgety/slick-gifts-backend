@@ -34,6 +34,9 @@ class User < ApplicationRecord
   has_many :friend_requests, dependent: :destroy
   has_many :pending_friends, through: :friend_requests, source: :friend
 
+  has_many :friendships, dependent: :destroy
+  has_many :friends, through: :friendships, source: :friend
+
   # Force devise emails to be sent in workers
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

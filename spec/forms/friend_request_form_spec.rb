@@ -36,4 +36,16 @@ RSpec.describe FriendRequestForm do
 
     expect(validate).to eq false
   end
+
+  it 'validates friend request does not already exist' do
+    create(:friend_request, user: user, friend: friend)
+
+    expect(validate).to eq false
+  end
+
+  it 'validates friendship does not already exist' do
+    create(:friendship, user: user, friend: friend)
+
+    expect(validate).to eq false
+  end
 end

@@ -4,3 +4,5 @@ en:
     not_blank?: must not be blank
     email_address?: must be a valid email address
     different_user?: cannot be yourself
+    request_unique?: request has already been sent
+    not_friends?: is already your friend
