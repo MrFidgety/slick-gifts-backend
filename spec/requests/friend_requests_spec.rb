@@ -61,4 +61,29 @@ RSpec.describe 'Api::V1::FriendRequests', type: :request do
       let(:id) { 'foobar' }
     end
   end
+
+  describe 'DELETE friend-requests/{id}' do
+    before { request_path "/api/v1/friend-requests/#{id}" }
+
+    let(:user) { create(:user, :with_session) }
+    let!(:friend_request) { create(:friend_request, user: user) }
+    let(:id) { friend_request.id }
+    let(:params) { default_params }
+    let(:headers) { auth_headers_for_user(user) }
+
+    subject { do_delete params: params, headers: headers }
+
+    it 'Success destroys the friend request' do
+      expect { subject }.to change(FriendRequest, :count).by(-1)
+
+      expect(response).to have_http_status :no_content
+    end
+
+    it_behaves_like 'request requires token authentication'
+    it_behaves_like 'request requires authorization'
+
+    it_behaves_like 'request with non-existent resource returns not found' do
+      let(:id) { 'foobar' }
+    end
+  end
 end

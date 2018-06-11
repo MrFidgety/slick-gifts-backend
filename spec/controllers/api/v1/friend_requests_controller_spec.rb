@@ -140,4 +140,62 @@ RSpec.describe Api::V1::FriendRequestsController, type: :controller do
     it_behaves_like 'an unprocessable action',
                     FriendRequests, :accept_friend_request
   end
+
+  describe 'DELETE destroy' do
+    before { request_action :destroy }
+
+    let(:friend) { build_with_id(:user) }
+
+    let(:friend_request) do
+      build_with_id(:friend_request, friend: friend)
+    end
+
+    let(:cancel_action) do
+      instance_double(
+        'FriendRequests::CancelFriendRequest',
+        success?: true
+      )
+    end
+
+    let(:params) { default_params.merge(id: friend_request.id) }
+
+    subject { delete :destroy, params: params }
+
+    before do
+      authenticate_as(friend)
+
+      allow(FriendRequest).to receive(:find)
+        .with(friend_request.id)
+        .and_return(friend_request)
+
+      allow(FriendRequests).to receive(:cancel_friend_request)
+        .with(friend_request)
+        .and_return(cancel_action)
+    end
+
+    describe 'Success' do
+      it { is_expected.to have_http_status :no_content }
+
+      it 'cancels the friend request' do
+        expect(FriendRequests).to receive(:cancel_friend_request)
+          .with(friend_request)
+
+        subject
+      end
+    end
+
+    it_behaves_like 'an authenticated endpoint'
+    it_behaves_like 'authorization is required'
+
+    it_behaves_like 'non-existent resource returns not found' do
+      before do
+        allow(FriendRequest).to receive(:find)
+          .with(friend_request.id)
+          .and_raise(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    it_behaves_like 'an unprocessable action',
+                    FriendRequests, :cancel_friend_request
+  end
 end

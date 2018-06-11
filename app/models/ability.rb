@@ -5,8 +5,11 @@ class Ability
 
   def initialize(authable)
     can :destroy, DeviseSessionable::Session, authable_id: authable.id
-    can :accept, FriendRequest do |friend_request|
-      authable == friend_request.friend
+    can :accept, FriendRequest do |request|
+      authable == request.friend
+    end
+    can :destroy, FriendRequest do |request|
+      [request.user, request.friend].include? authable
     end
   end
 end

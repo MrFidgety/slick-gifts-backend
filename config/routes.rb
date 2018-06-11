@@ -5,7 +5,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :friend_requests, only: %i[create], path: 'friend-requests' do
+      resources :friend_requests, only: %i[create destroy],
+                                  path: 'friend-requests' do
         post :accept, on: :member
       end
 

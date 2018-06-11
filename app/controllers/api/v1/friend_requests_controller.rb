@@ -4,6 +4,7 @@ module Api
   module V1
     class FriendRequestsController < ApiController
       authorize action: :accept, auths: { resource: :accept }
+      authorize action: :destroy, auths: { resource: :destroy }
 
       def create
         action = FriendRequests.create_friend_request(friend_request_attributes)
@@ -20,6 +21,16 @@ module Api
 
         if action.success?
           respond_with action.friendship
+        else
+          render_unprocessable action
+        end
+      end
+
+      def destroy
+        action = FriendRequests.cancel_friend_request(resource)
+
+        if action.success?
+          head :no_content
         else
           render_unprocessable action
         end

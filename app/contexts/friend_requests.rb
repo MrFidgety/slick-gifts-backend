@@ -9,5 +9,9 @@ module FriendRequests
     def accept_friend_request(*args)
       FriendRequests::AcceptFriendRequest.perform(*args)
     end
+
+    def cancel_friend_request(*args)
+      FriendRequests::CancelFriendRequest.perform(*args)
+    end
   end
 end
