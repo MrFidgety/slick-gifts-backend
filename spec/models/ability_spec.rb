@@ -81,19 +81,39 @@ RSpec.describe Ability do
     end
 
     context 'users' do
-      it 'cannot list friends' do
-        expect(subject).not_to be_able_to(:list_friends, create(:user))
+      describe 'friends' do
+        it 'cannot list friends' do
+          expect(subject).not_to be_able_to(:list_friends, create(:user))
+        end
+
+        it 'can list friends own friends' do
+          expect(subject).to be_able_to(:list_friends, authable)
+        end
+
+        context 'when friends' do
+          it 'can list friends' do
+            expect(subject).to be_able_to(
+              :list_friends, create(:user, friends: [authable])
+            )
+          end
+        end
       end
 
-      it 'can list friends own friends' do
-        expect(subject).to be_able_to(:list_friends, authable)
-      end
+      describe 'friend requests' do
+        it 'cannot list sent friend requests' do
+          expect(subject).not_to be_able_to(:list_sent_friend_requests, create(:user))
+        end
 
-      context 'when friends' do
-        it 'can list friends' do
-          expect(subject).to be_able_to(
-            :list_friends, create(:user, friends: [authable])
-          )
+        it 'can list own sent friend requests' do
+          expect(subject).to be_able_to(:list_sent_friend_requests, authable)
+        end
+
+        it 'cannot list received friend requests' do
+          expect(subject).not_to be_able_to(:list_received_friend_requests, create(:user))
+        end
+
+        it 'can list own received friend requests' do
+          expect(subject).to be_able_to(:list_received_friend_requests, authable)
         end
       end
     end

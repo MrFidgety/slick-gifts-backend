@@ -25,6 +25,16 @@ Rails.application.routes.draw do
         resources :friends,
                   only: %i[index],
                   controller: 'users/friends'
+
+        resources :friend_requests,
+                  only: [],
+                  controller: 'users/friend_requests',
+                  path: 'friend-requests' do
+          collection do
+            get :sent
+            get :received
+          end
+        end
       end
     end
   end

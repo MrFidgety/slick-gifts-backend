@@ -47,7 +47,26 @@ RSpec::Matchers.define :render_included_resource do |expected|
   end
 
   def included_resource_ids
-    @actual_resource ||= deserialize_included(actual.body)&.map_to(:id)
+    @included_resource_ids ||= deserialize_included(actual.body)&.map_to(:id)
+  end
+end
+
+RSpec::Matchers.define :render_included_resources do |expected|
+  match do |actual|
+    expect(expected_ids - included_resource_ids).to be_empty
+  end
+
+  failure_message do |_actual|
+    "expected included resources with ids \"#{expected_ids}\", " \
+      " got ids \"#{included_resource_ids || []}\""
+  end
+
+  def included_resource_ids
+    @included_resource_ids ||= deserialize_included(actual.body)&.map_to(:id)
+  end
+
+  def expected_ids
+    expected.to_a.map_to(:id)
   end
 end
 

@@ -17,5 +17,8 @@ class Ability
     can :list_friends, User do |user|
       authable == user || authable.friends.exists?(user.id)
     end
+    can [:list_sent_friend_requests, :list_received_friend_requests], User do |user|
+      authable == user
+    end
   end
 end

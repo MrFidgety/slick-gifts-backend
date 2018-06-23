@@ -86,4 +86,102 @@ RSpec.describe 'Api::V1::FriendRequests', type: :request do
       let(:id) { 'foobar' }
     end
   end
+
+  describe 'GET user/{id}/friend-requests/sent' do
+    before { request_path "/api/v1/users/#{id}/friend-requests/sent" }
+
+    let!(:user) { create(:user, :with_session) }
+    let!(:friend_requests) { create_list(:friend_request, 3, user: user) }
+    let(:id) { user.id }
+
+    let(:params) { {} }
+    let(:headers) { auth_headers_for_user(user) }
+
+    subject { do_get params: params, headers: headers }
+
+    it 'Success lists the users friend requests' do
+      subject
+
+      expect(response).to have_http_status :ok
+      expect(response).to render_primary_resources friend_requests
+      expect(response).to have_top_level_links(self: "/users/#{id}/friend-requests/sent")
+    end
+
+    describe 'resource inclusion' do
+      let(:inclusions) { %i[friend] }
+
+      let(:related) do
+        inclusions.each_with_object({}) do |inc, memo|
+          memo[inc] = friend_requests.map(&inc)
+        end
+      end
+
+      before do
+        params[:include] = inclusions.join(',').dasherize
+        subject
+      end
+
+      it 'can include friends' do
+        expect(response).to render_included_resources related[:friend]
+      end
+    end
+
+    it_behaves_like 'request with invalid inclusions returns bad request'
+    it_behaves_like 'request permits pagination'
+    it_behaves_like 'request requires token authentication'
+    it_behaves_like 'request requires authorization'
+
+    it_behaves_like 'request with non-existent resource returns not found' do
+      let(:id) { 'foobar' }
+    end
+  end
+
+  describe 'GET user/{id}/friend-requests/received' do
+    before { request_path "/api/v1/users/#{id}/friend-requests/received" }
+
+    let!(:user) { create(:user, :with_session) }
+    let!(:friend_requests) { create_list(:friend_request, 3, friend: user) }
+    let(:id) { user.id }
+
+    let(:params) { {} }
+    let(:headers) { auth_headers_for_user(user) }
+
+    subject { do_get params: params, headers: headers }
+
+    it 'Success lists the users received friend requests' do
+      subject
+
+      expect(response).to have_http_status :ok
+      expect(response).to render_primary_resources friend_requests
+      expect(response).to have_top_level_links(self: "/users/#{id}/friend-requests/received")
+    end
+
+    describe 'resource inclusion' do
+      let(:inclusions) { %i[user] }
+
+      let(:related) do
+        inclusions.each_with_object({}) do |inc, memo|
+          memo[inc] = friend_requests.map(&inc)
+        end
+      end
+
+      before do
+        params[:include] = inclusions.join(',').dasherize
+        subject
+      end
+
+      it 'can include users' do
+        expect(response).to render_included_resources related[:user]
+      end
+    end
+
+    it_behaves_like 'request with invalid inclusions returns bad request'
+    it_behaves_like 'request permits pagination'
+    it_behaves_like 'request requires token authentication'
+    it_behaves_like 'request requires authorization'
+
+    it_behaves_like 'request with non-existent resource returns not found' do
+      let(:id) { 'foobar' }
+    end
+  end
 end

@@ -25,6 +25,6 @@
 class FriendRequestSerializer < ActiveModel::Serializer
   attributes :id
 
-  belongs_to :user
-  belongs_to :friend, serializer: UserSerializer
+  belongs_to :user, serializer: FriendSerializer
+  belongs_to :friend, serializer: FriendSerializer
 end
