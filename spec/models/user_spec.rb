@@ -30,4 +30,8 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to have_many(:friend_requests).dependent(:destroy) }
   it { is_expected.to have_many(:pending_friends).through(:friend_requests) }
+  it { is_expected.to have_many(:friendships).dependent(:destroy) }
+  it { is_expected.to have_many(:friends).through(:friendships) }
+  it { is_expected.to have_many(:blockades).dependent(:destroy) }
+  it { is_expected.to have_many(:blocked_users).through(:blockades) }
 end

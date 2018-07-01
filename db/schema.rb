@@ -12,12 +12,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_10_051918) do
+ActiveRecord::Schema.define(version: 2018_07_01_094944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "blockades", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "blocked_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blocked_id"], name: "index_blockades_on_blocked_id"
+    t.index ["user_id", "blocked_id"], name: "index_blockades_on_user_id_and_blocked_id", unique: true
+    t.index ["user_id"], name: "index_blockades_on_user_id"
+  end
 
   create_table "devise_sessionable_sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "authentication_token"
@@ -65,6 +75,8 @@ ActiveRecord::Schema.define(version: 2018_06_10_051918) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "blockades", "users"
+  add_foreign_key "blockades", "users", column: "blocked_id"
   add_foreign_key "friend_requests", "users"
   add_foreign_key "friend_requests", "users", column: "friend_id"
   add_foreign_key "friendships", "users"

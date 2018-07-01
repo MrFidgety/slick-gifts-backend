@@ -28,7 +28,7 @@ RSpec.describe FriendRequests::CreateFriendRequest do
     end
   end
 
-  describe 'invalid advertisement attributes' do
+  describe 'invalid friend request attributes' do
     let(:form_errors) do
       Reform::Contract::Errors.new.tap do |e|
         e.add(:friend, 'cannot be yourself')
@@ -37,7 +37,7 @@ RSpec.describe FriendRequests::CreateFriendRequest do
 
     let(:failure_case) do
       instance_double(
-        'AdvertisementForm',
+        'FriendRequestForm',
         validate: false,
         model: FriendRequest.new,
         errors: form_errors,

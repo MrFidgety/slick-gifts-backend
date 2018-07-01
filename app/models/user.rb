@@ -31,6 +31,9 @@ class User < ApplicationRecord
   devise :confirmable, :database_authenticatable, :registerable, :recoverable,
          :validatable
 
+  has_many :blockades, dependent: :destroy
+  has_many :blocked_users, through: :blockades, source: :blocked
+
   has_many :friend_requests, dependent: :destroy
   has_many :pending_friends, through: :friend_requests, source: :friend
 

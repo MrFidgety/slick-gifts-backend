@@ -117,5 +117,27 @@ RSpec.describe Ability do
         end
       end
     end
+
+    context 'blockades' do
+      it 'cannot destroy blockades' do
+        expect(subject).not_to be_able_to(:destroy, create(:blockade))
+      end
+
+      context 'as user role' do
+        it 'can destroy blockades' do
+          expect(subject).to be_able_to(
+            :destroy, create(:blockade, user: authable)
+          )
+        end
+      end
+
+      context 'as blocked role' do
+        it 'cannot destroy blockade' do
+          expect(subject).not_to be_able_to(
+            :destroy, create(:blockade, blocked: authable)
+          )
+        end
+      end
+    end
   end
 end

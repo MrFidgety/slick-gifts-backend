@@ -20,5 +20,8 @@ class Ability
     can [:list_sent_friend_requests, :list_received_friend_requests], User do |user|
       authable == user
     end
+    can :destroy, Blockade do |blockade|
+      authable == blockade.user
+    end
   end
 end
