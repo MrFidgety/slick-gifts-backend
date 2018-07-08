@@ -24,6 +24,10 @@ Rails.application.routes.draw do
                                   controller: 'users/confirmations'
         end
 
+        resources :blockades,
+                  only: %i[index],
+                  controller: 'users/blockades'
+
         resources :friends,
                   only: %i[index],
                   controller: 'users/friends'

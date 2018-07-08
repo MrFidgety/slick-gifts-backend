@@ -48,6 +48,11 @@ FactoryBot.define do
       end
     end
 
+    trait :with_blocked_users do
+      after :create do |user|
+        create_list(:blockade, 5, user: user)
+      end
+    end
 
     after(:build) do |user, evaluator|
       if evaluator.confirmed

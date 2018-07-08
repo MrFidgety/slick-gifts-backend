@@ -59,4 +59,34 @@ RSpec.describe 'Api::V1::Blockade', type: :request do
       let(:id) { 'foobar' }
     end
   end
+
+  describe 'GET blockades' do
+    before { request_path "/api/v1/users/#{id}/blockades" }
+
+    let!(:user) { create(:user, :with_session, :with_blocked_users) }
+    let(:blockades) { user.blockades.to_a }
+    let(:id) { user.id }
+
+    let(:params) { {} }
+    let(:headers) { auth_headers_for_user(user) }
+
+    subject { do_get params: params, headers: headers }
+
+    it 'Success lists the users blockades' do
+      subject
+
+      expect(response).to have_http_status :ok
+      expect(response).to render_primary_resources blockades
+      expect(response).to have_top_level_links(self: "/users/#{id}/blockades")
+    end
+
+    it_behaves_like 'request with invalid inclusions returns bad request'
+    it_behaves_like 'request permits pagination'
+    it_behaves_like 'request requires token authentication'
+    it_behaves_like 'request requires authorization'
+
+    it_behaves_like 'request with non-existent resource returns not found' do
+      let(:id) { 'foobar' }
+    end
+  end
 end
