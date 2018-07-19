@@ -15,15 +15,25 @@
 #  unconfirmed_email      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  first_name             :citext
+#  last_name              :citext
+#  username               :citext
 #
 # Indexes
 #
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_username              (username) UNIQUE
 #
 
 class User < ApplicationRecord
+  include PgSearch
+
+  pg_search_scope :search_by_names,
+                  against: { first_name: 'A', last_name: 'B', username: 'C' },
+                  using: { tsearch: { prefix: true, any_word: true } }
+
   acts_as_sessionable
 
   # Include default devise modules. Others available are:

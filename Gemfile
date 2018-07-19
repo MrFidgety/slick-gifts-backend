@@ -60,6 +60,8 @@ gem 'reform-rails'
 gem 'dry-validation', '~> 0.11'
 # Error logging
 gem 'sentry-raven'
+# Postgres full-text search
+gem 'pg_search'
 
 group :development, :test, :staging do
   # Factory Bot to create objects for your tests
