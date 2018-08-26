@@ -5,6 +5,8 @@ module Api
     class UsersController < ApiController
       skip_authentication_for :create
 
+      enable_pagination_for :index
+
       def create
         action = ::Users.create_user(user_attributes)
 
@@ -15,6 +17,11 @@ module Api
         end
       end
 
+      def index
+        respond_with user_search_result,
+                     each_serializer: ::Users::PublicUserSerializer
+      end
+
       private
 
       def user_attributes
@@ -23,6 +30,10 @@ module Api
 
       def params_plus
         @params_plus ||= ParamsPlus.new(params)
+      end
+
+      def user_search_result
+        @user_search_result ||= UsersQuery.all(params[:search], queries)
       end
     end
   end

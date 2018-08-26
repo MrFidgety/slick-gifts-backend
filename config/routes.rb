@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
       resources :sessions, only: %i[create destroy]
 
-      resources :users, only: %i[create] do
+      resources :users, only: %i[create index] do
         collection do
           # Set confirmation url used by devise
           resource :confirmation, only: %i[show],

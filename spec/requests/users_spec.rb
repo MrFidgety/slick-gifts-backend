@@ -60,4 +60,35 @@ RSpec.describe 'Api::V1::Users', type: :request do
       let(:error_pointer) { '/data/attributes/email' }
     end
   end
+
+  describe 'GET /users?search' do
+    before { request_path '/api/v1/users' }
+
+    let!(:user) { create(:user, :with_session, :with_friends) }
+    let(:headers) { auth_headers_for_user(user) }
+
+    let(:params) do
+      { search: 'tim' }
+    end
+
+    let!(:matched_users) do
+      [
+        create(:user, first_name: 'Timothy'),
+        create(:user, last_name: 'Timberlake'),
+        create(:user, username: 'timbo')
+      ]
+    end
+
+    subject { do_get params: params, headers: headers }
+
+    it 'Success returns a list of matching users' do
+      subject
+
+      expect(response).to have_http_status :ok
+      expect(response).to render_primary_resources matched_users
+    end
+
+    it_behaves_like 'request permits pagination'
+    it_behaves_like 'request requires token authentication'
+  end
 end

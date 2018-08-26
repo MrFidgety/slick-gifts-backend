@@ -38,4 +38,39 @@ RSpec.describe User, type: :model do
   it { is_expected.to have_many(:friends).through(:friendships) }
   it { is_expected.to have_many(:blockades).dependent(:destroy) }
   it { is_expected.to have_many(:blocked_users).through(:blockades) }
+
+  describe '.search_by_names' do
+    let!(:first_name_match) { create(:user, first_name: 'tim') }
+    let!(:last_name_match) { create(:user, last_name: 'tim') }
+    let!(:username_match) { create(:user, username: 'tim') }
+    let!(:other_user) { create(:user, first_name: 'smith') }
+
+    subject { described_class.search_by_names('tim') }
+
+    it 'returns users with matching start of first name' do
+      expect(subject).to include first_name_match
+    end
+
+    it 'returns users with matching start of last name' do
+      expect(subject).to include last_name_match
+    end
+
+    it 'returns users with matching start of username' do
+      expect(subject).to include username_match
+    end
+
+    it 'ranks using first, last, then username' do
+      sorted_users = [
+        first_name_match,
+        last_name_match,
+        username_match,
+      ]
+
+      expect(subject).to eq sorted_users
+    end
+
+    it 'matches on any word from the query' do
+      expect(described_class.search_by_names('tim smith')).to include other_user
+    end
+  end
 end
